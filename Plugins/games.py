@@ -201,7 +201,7 @@ def gamesFunc(c,m,k,channel):
          InlineKeyboardButton ('توب الحرامية 💰', callback_data=f'topzrf:{m.from_user.id}'),
        ],
        [
-        InlineKeyboardButton ('🧚‍♀️',url=f't.me/{channel}')
+        InlineKeyboardButton ('🧸',url=f't.me/{channel}')
        ]
        ]
      ))
@@ -211,7 +211,7 @@ def gamesFunc(c,m,k,channel):
        return m.reply(f'{k} مافيه حسابات بالبنك')
      else:
        rep = InlineKeyboardMarkup (
-         [[InlineKeyboardButton ('🧚‍♀️', url=f't.me/{channel}')]]
+         [[InlineKeyboardButton ('🧸', url=f't.me/{channel}')]]
        )
        if r.get('BankTop'):
           text = r.get('BankTop')
@@ -276,7 +276,7 @@ def gamesFunc(c,m,k,channel):
        return m.reply(f'{k} مافيه حسابات بالبنك')
      else:
        rep = InlineKeyboardMarkup (
-         [[InlineKeyboardButton ('🧚‍♀️', url=f't.me/{channel}')]]
+         [[InlineKeyboardButton ('🧸', url=f't.me/{channel}')]]
        )
        if r.get('BankTopZRF'):
           text = r.get('BankTopZRF')
@@ -1009,10 +1009,10 @@ def gamesFunc(c,m,k,channel):
    
    if text == "سورس" or text == "السورس":
     return m.reply_photo(
-        "https://gcdnb.pbrd.co/images/bOMz1R4wG9xF.jpg",
-        caption="سورس فلير حماية الكروبات، ارفعه مشرف بكروبك واحميها:",
+        "https://t.me/ttatagag/2",
+        caption="- تحمّل هموم الدنيا لأن رب العباد معك ولن يخذلك ♥️",
         reply_markup=InlineKeyboardMarkup(
-            [[InlineKeyboardButton("الدخول البوت 💥", url="https://t.me/w7G_BoT")]]
+            [[InlineKeyboardButton("تحديثات حمد", url="https://t.me/TEPTHON")]]
         )
     )
    
@@ -1638,7 +1638,7 @@ def gamesFunc(c,m,k,channel):
      dice = c.send_dice(m.chat.id,"🎲",reply_to_message_id=m.id,
      reply_markup=InlineKeyboardMarkup (
        [[
-         InlineKeyboardButton ("🧚‍♀️",url=f"t.me/{channel}")
+         InlineKeyboardButton ("🧸",url=f"t.me/{channel}")
        ]]
      ))
      if dice.dice.value == 6:
@@ -1680,7 +1680,7 @@ def akinatorHandler(c,m):
    channel = r.get(f'{Dev_Zaid}:BotChannel') if r.get(f'{Dev_Zaid}:BotChannel') else 'Tepthon'
    if m.data == f'start_aki:{m.from_user.id}':
     rep = InlineKeyboardMarkup (
-         [[InlineKeyboardButton ('🧚‍♀️', url=f't.me/{channel}')]]
+         [[InlineKeyboardButton ('🧸', url=f't.me/{channel}')]]
        )
     m.edit_message_text("⇜ جاري بدء اللعبة...",reply_markup=rep)
     aki= akinator.Akinator()
@@ -1706,7 +1706,7 @@ def akinatorHandler(c,m):
         print(str_to_send)
         m.message.delete()
         rep = InlineKeyboardMarkup (
-         [[InlineKeyboardButton ('🧚‍♀️', url=f't.me/{channel}')]]
+         [[InlineKeyboardButton ('🧸', url=f't.me/{channel}')]]
          )
         try: c.send_photo(m.message.chat.id,str_to_send['absolute_picture_path'],caption=f"{str_to_send['name']} - {str_to_send['description']}",reply_markup=rep)
         except: c.send_message(m.message.chat.id,f"{str_to_send['name']} - {str_to_send['description']}",reply_markup=rep)
@@ -1732,7 +1732,7 @@ def akinatorHandler(c,m):
         print(str_to_send)
         m.message.delete()
         rep = InlineKeyboardMarkup (
-         [[InlineKeyboardButton ('🧚‍♀️', url=f't.me/{channel}')]]
+         [[InlineKeyboardButton ('🧸', url=f't.me/{channel}')]]
          )
         try: c.send_photo(m.message.chat.id,str_to_send['absolute_picture_path'],caption=f"{str_to_send['name']} - {str_to_send['description']}",reply_markup=rep)
         except: c.send_message(m.message.chat.id,f"{str_to_send['name']} - {str_to_send['description']}",reply_markup=rep)
@@ -1758,7 +1758,7 @@ def akinatorHandler(c,m):
         print(str_to_send)
         m.message.delete()
         rep = InlineKeyboardMarkup (
-         [[InlineKeyboardButton ('🧚‍♀️', url=f't.me/{channel}')]]
+         [[InlineKeyboardButton ('🧸', url=f't.me/{channel}')]]
          )
         try: c.send_photo(m.message.chat.id,str_to_send['absolute_picture_path'],caption=f"{str_to_send['name']} - {str_to_send['description']}",reply_markup=rep)
         except: c.send_message(m.message.chat.id,f"{str_to_send['name']} - {str_to_send['description']}",reply_markup=rep)
