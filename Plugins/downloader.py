@@ -30,6 +30,13 @@ from PIL import Image, ImageFilter
 #from pySmartDL import SmartDL
 
 shazam = Shazam()
+def get_cookies_file():
+    folder_path = f"{os.getcwd()}/cookies"
+    txt_files = glob.glob(os.path.join(folder_path, '*.txt'))
+    if not txt_files:
+        raise FileNotFoundError("No .txt files found in the specified folder.")
+    cookie_txt_file = random.choice(txt_files)
+    return cookie_txt_file
 
 def time_to_seconds(time):
     stringt = str(time)
