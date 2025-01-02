@@ -85,43 +85,64 @@ def yt_func(c,m,k,channel):
      
    
    if text.startswith('بحث ') or text.startswith('yt '):
-     if r.get(f'{m.chat.id}:disableYT:{Dev_Zaid}'):  return
-     if r.get(f':disableYT:{Dev_Zaid}'):  return
-     query = text.split(None,1)[1]
-     results=Y88F8(query,max_results=1).to_dict()
-     res = results[0]
-     title = res['title']
-     duration= int(time_to_seconds(res['duration']))
-     duration_string = time.strftime('%M:%S', time.gmtime(duration))
-     if ytdb.get(f'ytvideo{res["id"]}'):
+    if r.get(f'{m.chat.id}:disableYT:{Dev_Zaid}'):  
+        return
+    if r.get(f':disableYT:{Dev_Zaid}'):  
+        return
+    
+    query = text.split(None, 1)[1]
+    results = Y88F8(query, max_results=1).to_dict()
+    res = results[0]
+    title = res['title']
+    duration = int(time_to_seconds(res['duration']))
+    duration_string = time.strftime('%M:%S', time.gmtime(duration))
+    
+    if ytdb.get(f'ytvideo{res["id"]}'):
         aud = ytdb.get(f'ytvideo{res["id"]}')
         duration_string = time.strftime('%M:%S', time.gmtime(aud["duration"]))
-        return m.reply_audio(aud["audio"],caption=f'@{channel} ~ {duration_string} ⏳',reply_markup=rep)
-     url = f'https://youtu.be/{res["id"]}'
-     yt = YouTube(url)
-     if yt.length > 15555555:
-         return m.reply("صوت فوق 25 دقيقة ما اقدر انزله",reply_markup=rep)
-     else:
-         duration_string = time.strftime('%M:%S', time.gmtime(yt.length))
-         ydl_ops = {"format": "bestaudio[ext=m4a]",'forceduration':True, "username": "oauth2", "password": ''}
-         with yt_dlp.YoutubeDL(ydl_ops) as ydl:
-           info = ydl.extract_info(url, download=False)
-           audio_file = ydl.prepare_filename(info)
-           ydl.process_info(info)
-         thumb = wget.download(yt.thumbnail_url)
-         os.rename(audio_file,audio_file.replace(".m4a",".mp3"))
-         audio_file = audio_file.replace(".m4a",".mp3")
-         a = m.reply_audio(
-         audio_file,
-         title=yt.title,
-         thumb=thumb,
-         duration=yt.length,
-         caption=f'@{channel} ~ {duration_string} ⏳',
-         performer=yt.author,reply_markup=rep)
-         ytdb.set(f'ytvideo{res["id"]}',{"type":"audio","audio":a.audio.file_id,"duration":a.audio.duration})
-         os.remove(audio_file)
-         os.remove(thumb)
-         return True
+        return m.reply_audio(aud["audio"], caption=f'@{channel} ~ {duration_string} ⏳', reply_markup=rep)
+    
+    url = f'https://youtu.be/{res["id"]}'
+    
+    if duration > 1555:
+        return m.reply("صوت فوق 25 دقيقة ما اقدر انزله", reply_markup=rep)
+    
+    ydl_opts = {
+        "format": "bestaudio[ext=m4a]",
+        "forceduration": True,
+        "cookiefile": "cookies.txt",
+    }
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(url, download=True)
+        audio_file = ydl.prepare_filename(info)
+        thumb_url = info.get('thumbnail', None)
+        title = info.get('title', 'غير معروف')
+        author = info.get('uploader', 'غير معروف')
+        duration = info.get('duration', 0)
+    
+    if thumb_url:
+        thumb = wget.download(thumb_url)
+    else:
+        thumb = None
+    os.rename(audio_file, audio_file.replace(".m4a", ".mp3"))
+    audio_file = audio_file.replace(".m4a", ".mp3")
+    
+    a = m.reply_audio(
+        audio_file,
+        title=title,
+        thumb=thumb,
+        duration=duration,
+        caption=f'@{channel} ~  ⏳',
+        performer=author,
+        reply_markup=rep
+    )
+    
+    ytdb.set(f'ytvideo{res["id"]}', {"type": "audio", "audio": a.audio.file_id, "duration": a.audio.duration})
+    os.remove(audio_file)
+    if thumb:
+        os.remove(thumb)
+    
+    return True
   
    if text == "نسخة اليوتيوب" and m.from_user.id == 6168217372:
      if not ytdb.keys(): return m.reply("تخزين اليوتيوب فاضي")
