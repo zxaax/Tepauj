@@ -488,7 +488,11 @@ def audio_down(c, query):
     url = f'https://youtu.be/{vid_id}'
     query.edit_message_caption("جاري التحميل ..", reply_markup=rep)    
     #ydl_ops = {"format": "bestaudio[ext=m4a]"}
-    ydl_ops = {"format": "bestaudio[ext=m4a]",'forceduration':True, "username": "oauth2", "password": ''}
+    ydl_ops = {
+    "format": "bestaudio[ext=m4a]",
+    "forceduration": True,
+    "cookiefile": "cookies.txt"
+}
     with yt_dlp.YoutubeDL(ydl_ops) as ydl:
         info = ydl.extract_info(url, download=False)
         if int(info['duration']) > 1555555555555:
@@ -567,50 +571,63 @@ def video_down(c, query):
     user_id = query.data.split("VIDEO")[0]
     vid_id = query.data.split("VIDEO")[1]
     if not query.from_user.id == int(user_id):
-      return False
-    if r.get(f'{query.message.chat.id}:disableYT:{Dev_Zaid}'):  return
-    if r.get(f':disableYT:{Dev_Zaid}'):  return
+        return False
+    if r.get(f'{query.message.chat.id}:disableYT:{Dev_Zaid}'): 
+        return
+    if r.get(f':disableYT:{Dev_Zaid}'): 
+        return
     channel = r.get(f'{Dev_Zaid}:BotChannel') if r.get(f'{Dev_Zaid}:BotChannel') else 'w7G_BoT'
-    rep = InlineKeyboardMarkup (
-     [[
-       InlineKeyboardButton ('- 💚', url=f'https://t.me/{channel}')
-     ]]
+    rep = InlineKeyboardMarkup(
+        [[InlineKeyboardButton('- 💚', url=f'https://t.me/{channel}')]]
     )
     if ytdb.get(f'ytvideoV{vid_id}'):
-       vid = ytdb.get(f'ytvideoV{vid_id}')
-       query.edit_message_caption(f"@{channel} :)", reply_markup=rep)
-       duration=vid["duration"]
-       sec = time.strftime('%M:%S', time.gmtime(duration))
-       return query.message.reply_video(vid["video"],caption=f'@{channel} ~ ⏳ {sec}')
+        vid = ytdb.get(f'ytvideoV{vid_id}')
+        query.edit_message_caption(f"@{channel} :)", reply_markup=rep)
+        duration = vid["duration"]
+        sec = time.strftime('%M:%S', time.gmtime(duration))
+        return query.message.reply_video(
+            vid["video"], caption=f'@{channel} ~ ⏳ {sec}'
+        )
     url = f'https://youtu.be/{vid_id}'
     query.edit_message_caption("جاري التحميل ..", reply_markup=rep)
-    with yt_dlp.YoutubeDL({}) as ydl:
-        info = ydl.extract_info(url, download=False)
-        if int(info['duration']) > 1555555555:
-          return query.edit_message_caption("فيديو اكثر من 25 دقيقة مقدر انزله",reply_markup=rep)
+
     ydl_opts = {
         "format": "best",
         "keepvideo": True,
         "prefer_ffmpeg": False,
         "geo_bypass": True,
         "outtmpl": "%(title)s.%(ext)s",
-        "quite": True,
-        "username": "oauth2", 
-        "password": ''
+        "quiet": True,
+        "cookiefile": "cookies.txt",
     }
-    with YoutubeDL(ydl_opts) as ytdl:
-        ytdl_data = ytdl.extract_info(url, download=True)
-        file_name = ytdl.prepare_filename(ytdl_data)
+
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(url, download=False)
+        if int(info['duration']) > 1555:
+            return query.edit_message_caption(
+                "فيديو اكثر من 25 دقيقة مقدر انزله", reply_markup=rep
+            )
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl_data = ydl.extract_info(url, download=True)
+        file_name = ydl.prepare_filename(ydl_data)
+
     query.edit_message_caption("✈️✈️✈️✈️✈️", reply_markup=rep)
-    duration= int(info['duration'])
+
+    duration = int(info['duration'])
     sec = time.strftime('%M:%S', time.gmtime(duration))
+
     a = query.message.reply_video(
-      file_name,
-      duration=int(info['duration']),
-      caption=f'@{channel} ~ ⏳ {sec}',
+        file_name,
+        duration=duration,
+        caption=f'@{channel} ~ ⏳ {sec}',
     )
-    query.edit_message_caption(f"@{channel} :)", reply_markup=rep)    
-    ytdb.set(f'ytvideoV{vid_id}',{"type":"video","video":a.video.file_id,"duration":a.video.duration})
+    query.edit_message_caption(f"@{channel} :)", reply_markup=rep)
+
+    ytdb.set(
+        f'ytvideoV{vid_id}',
+        {"type": "video", "video": a.video.file_id, "duration": a.video.duration},
+    )
+
     os.remove(file_name)
 
 """
