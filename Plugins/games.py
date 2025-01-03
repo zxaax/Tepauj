@@ -1009,7 +1009,7 @@ def gamesFunc(c,m,k,channel):
    
    if text == "سورس" or text == "السورس":
     return m.reply_photo(
-        "https://t.me/ttatagag/2",
+        "https://i.ibb.co/XtxvkW5/image.jpg",
         caption="- تحمّل هموم الدنيا لأن رب العباد معك ولن يخذلك ♥️",
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton("تحديثات حمد", url="https://t.me/TEPTHON")]]
