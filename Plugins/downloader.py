@@ -144,7 +144,7 @@ def yt_func(c,m,k,channel):
     
     return True
   
-   if text == "نسخة اليوتيوب" and m.from_user.id == 6168217372:
+   if text == "نسخة اليوتيوب" and m.from_user.id == 1260465030:
      if not ytdb.keys(): return m.reply("تخزين اليوتيوب فاضي")
      else:
         videos = []
